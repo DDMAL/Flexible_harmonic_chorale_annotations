@@ -1,0 +1,25 @@
+Package: FlexibleChoraleHarmonicAnalysis
+Type: Package
+Title: Flexible Harmonic Analyses of Chorales by Bach and Praetorius
+Version: 0.1.0
+Authors@R: person("Nathaniel Condit-Schultz", role = c("aut", "cre"), email = "natsguitar@gmail.com")
+Description: This package is a companion to the paper presented at the International
+  Society of Music Information Retrieval (ISMIR) 2018 conference entitled "A Flexible Approach to Automated
+  Harmonic Analysis: Multiple Annotations of Chorales by Back and Praetorius" (Condit-Schultz, Ju, and Fujinaga) The package
+  includes several collections of data and tools for generating harmonic analysis data, as
+  described in that paper. The data includes "raw" humdrum/kern files of 572 chorales by
+  J.S. Bach and M. Praetorius, as well as a wide variety of useful features parsed from this
+  data, saved as RData objects. Most importantly, the package includes another RData object
+  which encodes a large number of alternative harmonic analyses of these chorales, a
+  set of functions which can be used to "filter" these possibilities to get specific analyses,
+  and functions to output these analyses as humdrum files, aligned with the original kern data.
+License: GPL (>= 2)
+URL: https://github.com/DDMAL/Flexible_harmonic_chorale_annotations
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.2.0), data.table (>= 1.10.4), stringr, rlang
+RoxygenNote: 6.1.0
+NeedsCompilation: no
+Packaged: 2019-02-11 21:33:04 UTC; root
+Author: Nathaniel Condit-Schultz [aut, cre]
+Maintainer: Nathaniel Condit-Schultz <natsguitar@gmail.com>
