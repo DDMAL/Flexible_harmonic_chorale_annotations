@@ -25,7 +25,7 @@ Data$harmRhythm[Data$FileName %~% chor.tmp & Data$Record == 75] <- FALSE
 
 # chor 024
 chor.tmp <- 'chor041'
-Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 122][[1]][3] <- 'Sus'
+Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 122][[1]][3] <- 'Sus'  # WRONG
 
 # chor 120
 chor.tmp <- 'chor120'
@@ -48,8 +48,8 @@ chor.tmp <- 'chor145'
 # 201
 
 chor.tmp <- 'chor201'
-Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 64][[1]][1] <- 'Esc' # quarter note escape tone
-Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 65][[1]][3] <- 'Inc' # Incomplete neighbor, not changing direction
+Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 64][[1]][1] <- 'Esc' # quarter note escape tone # # WRONG
+Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 65][[1]][3] <- 'Inc' # Incomplete neighbor, not changing direction# WRONG
 
 # 202
 chor.tmp <- 'chor202'
@@ -58,7 +58,7 @@ Data$harmRhythm[Data$FileName %~% chor.tmp & Data$Record == 180] <- FALSE
 
 # chor 220
 chor.tmp <- 'chor220'
-Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 108][[1]][1] <- 'Esc' # Weird escape tone "b13" chord
+Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 108][[1]][1] <- 'Esc' # Weird escape tone "b13" chord# WRONG
 
 # chor 234
 chor.tmp <- 'chor234'
@@ -79,8 +79,8 @@ Data$harmRhythm[Data$FileName %~% chor.tmp & Data$Record %in% c(40,45)] <- TRUE
 # 306 (which is identical to 201)
 
 chor.tmp <- 'chor306'
-Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 64][[1]][1] <- 'Esc' # quarter note escape tone
-Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 65][[1]][3] <- 'Inc' # Incomplete neighbor, not changing direction
+Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 64][[1]][1] <- 'Esc' # quarter note escape tone# WRONG
+Data$pNCTs[Data$FileName %~% chor.tmp & Data$Record == 65][[1]][3] <- 'Inc' # Incomplete neighbor, not changing direction# WRONG
 
 
 # chor 316
@@ -718,169 +718,169 @@ windowCombs <- Data[ , windowParse(.SD, 100), by = Slice_WindowNumber, verbose =
                                 'Note_isOnset', 'Note_isRest', 'Slice_NumberOf_NewPitchClasses', 'Note_VoiceLeading_Departure',
                                 'Slice_Duration', 'Note_isLongerThanSlice', 'Slice_Metric_Position', 'Note_Number', 'Slice_Number')]
           
-# save(windowCombs, file = 'windowCombinations_Sep12_2018.rData', compress = TRUE)
+save(windowCombs, file = 'windowCombinations_Sep12_2018.rData', compress = TRUE)
 
 ####################################################################################################################################
 ####################################################################################################################################
 ####################################################################################################################################
 ####################################################################################################################################
 
-legalranks <- c(7,0, 0, 1, 2, 4, 2, 2, 2, 6, 6, 6, 5, 5, 5, 3, 3, 3, 5, 5, 5, 5, 5)
-names(legalranks) <- names(legal)
-
-summarizeWindowCombs <- function(windows) {
-  lapply(windows,
-         function(progs) {
-           lapply(progs,
-                  f.({
-                    list2env(., envir = environment())
-                    data.frame(
-                      NChords = nrow(.),
-                      stringsAsFactors = FALSE,
-                      NOnsets = min(Onsets),
-                      NCTs   = fractions(sum(nNCTs) / (sum(nCTs) + sum(nNCTs))),
-                      Delay   =  max(ChordDelayBeats),
-                      Rank   = max(legalranks[legal %in% Hints]),
-                      Duration = min(Duration)
-                    ) -> output
-                    
-                    contcols <- colnames(.) %~% 'Strong|Weak|Same'
-                    contours <- .[, contcols] %|% colSums
-                    dim(contours) <- c(1, length(contours))
-                    colnames(contours) <- colnames(.)[contcols]
-                    output$Contours <- list(contours)
-                    
-                    output
-                  })) %splat|% rbind -> analyses
-         })
-}
-
-windowCombs[, Summaries := summarizeWindowCombs(Combs)]
-
-# save(windowCombs, file = 'windowCombinationsJuly24.rData', compress = TRUE)
-load(file = 'windowCombinationsJuly24.rData')
-
-
-unwrapFormula <- function(x) {
-          if (length(x) > 1 && deparse(x[[1]]) == '~') {
-                    out <- sys.function()(x[[2]])
-                    if(length(x) > 2) append(out, x[[3]]) else out
-          } else {
-                    list(x)
-          }
-}
-
-Contour <- function(form) {
-          # forms <- unwrapFormula(form)
-          # 
-          contours <- parent.frame()$Contours %splat|% rbind
-          
-          
-          apply(contours, 1,
-                function(row) {
-                          getContour(form, row)
-                          #                 lapply(forms,
-                          #                        function(form) {
-                          #                                 which(sapply(form, is.character)) -> res
-                          #                                 for(i in res) {
-                          #                                  form[[i]] <- getContour(form[[i]], row)         
-                          #                                 }
-                          #                                  if (is.character(form)) as.numeric(form) else  eval(form)
-                          #                        }) -> evaled
-                          #                 
-                          #                 browser()
-                }) 
-          
-}
-getContour <- function(str, row) { sum(row[names(row) %~% str]) }
-
-
-
-# load(file = 'windowCombinations.rData')
-
-interpretWindow <- function(.SD, filter = NULL, sort = NULL, verbose = TRUE) {
-          progs <- .SD$Combs[[1]]
-          analyses <- .SD$Summaries[[1]]
-          wn <- unique(.SD$windows)
-          if (wn %len>% 1) stop("Can't interpret multiple windows", call. = FALSE)
-          if ( length(analyses) > 1) {
-          if (progs %len>% 1L && !is.null(filter)) {
-                    filters <- unwrapFormula(filter)
-                    sapply(filters, eval, envir = analyses) %>% apply(1, all) -> evaledfilters
-                    if (!any(evaledfilters)) return(NULL)
-                    progs <- progs[evaledfilters]
-                    analyses <- analyses[evaledfilters, ]
-
-
-          }
-          if (progs %len>% 1L && !is.null(sort)) {
-                    sorts <- unwrapFormula(sort)    
-                    sorts <- lapply(sorts, function(s) call('order', s))
-                    
-                    lapply(rev(sorts), 
-                           function(fil) {
-                                     ord <- eval(fil, envir = analyses)
-                                     analyses <<- analyses[ord, ]
-                                     progs <<- progs[ord]
-                           })
-                    
-                    
-          }
-}
-          
-          if (verbose) {
-                    cat('\n')
-                    cat(' Window ', wn, ':\n', sep = '') 
-                    for(i in 1:length(progs)) {
-                              cat('------------------------------------\n')
-                              cat('\t')
-                              cat(progs[[i]]$ChordName, '\n')
-                              currow <- analyses[i, 1:6]
-                              currow$NCTs <- attr(currow$NCTs, 'fracs')
-                              cat('\t\t' %str+% colnames(currow) %str+% ' ' %str+% unlist(currow) %str+% '\n')
-                              cat('\n')
-                    }
-                    invisible(analyses)
-          } else { 
-                    prog <- progs[[1]]
-                   output <- rep(prog$ChordName, prog$Nslices)
-                   if (length(output) == 0) output <- rep(NA, sum(Data$windows == wn))
-                    # if (length(Data$windows[Data$windows == wn]) != length(output)) browser()
-                   output
-          }
-                    
-          
-                    
-}
-interpretWindows <- function(wns = TRUE, filter = NULL, sort = NULL, wcombs = windowCombs) {
-          
-          wcombs[wns, interpretWindow(.SD, filter = filter, 
-                                      sort = sort, verbose = FALSE), by = windows] -> output
-          
-          # data.frame(Chord = output, stringsAsFactors = FALSE)
-          output
-          
-}
-
-
-######SORTING
-
-#1 Only accept excape tone/cambiata (leapt from) if no other option
-#2 Only accept appagiatura (leapt to) if no other option
-#3 Take Delay == 0, unless there is no other option
-#4 Take only lowest rank, unless other option
-#5 take fewest chords
-
-take1 <- ~ Contour('Esc|App|Ret|Inc|syn|[+]') > 0 ~ Rank ~  NChords
-
-chords1 <- interpretWindows(TRUE, sort = take1)
-
-for (i in seq_along(outs)) {
- # print(i)        
-# writechords(i)
-  writeLines(trans(fs[[outs[i]]]), fns[i])
-# sapply(unique(Data$FileName), writechords)
-}
+# legalranks <- c(7,0, 0, 1, 2, 4, 2, 2, 2, 6, 6, 6, 5, 5, 5, 3, 3, 3, 5, 5, 5, 5, 5)
+# names(legalranks) <- names(legal)
+# 
+# summarizeWindowCombs <- function(windows) {
+#   lapply(windows,
+#          function(progs) {
+#            lapply(progs,
+#                   f.({
+#                     list2env(., envir = environment())
+#                     data.frame(
+#                       NChords = nrow(.),
+#                       stringsAsFactors = FALSE,
+#                       NOnsets = min(Onsets),
+#                       NCTs   = fractions(sum(nNCTs) / (sum(nCTs) + sum(nNCTs))),
+#                       Delay   =  max(ChordDelayBeats),
+#                       Rank   = max(legalranks[legal %in% Hints]),
+#                       Duration = min(Duration)
+#                     ) -> output
+#                     
+#                     contcols <- colnames(.) %~% 'Strong|Weak|Same'
+#                     contours <- .[, contcols] %|% colSums
+#                     dim(contours) <- c(1, length(contours))
+#                     colnames(contours) <- colnames(.)[contcols]
+#                     output$Contours <- list(contours)
+#                     
+#                     output
+#                   })) %splat|% rbind -> analyses
+#          })
+# }
+# 
+# windowCombs[, Summaries := summarizeWindowCombs(Combs)]
+# 
+# # save(windowCombs, file = 'windowCombinationsJuly24.rData', compress = TRUE)
+# load(file = 'windowCombinationsJuly24.rData')
+# 
+# 
+# unwrapFormula <- function(x) {
+#           if (length(x) > 1 && deparse(x[[1]]) == '~') {
+#                     out <- sys.function()(x[[2]])
+#                     if(length(x) > 2) append(out, x[[3]]) else out
+#           } else {
+#                     list(x)
+#           }
+# }
+# 
+# Contour <- function(form) {
+#           # forms <- unwrapFormula(form)
+#           # 
+#           contours <- parent.frame()$Contours %splat|% rbind
+#           
+#           
+#           apply(contours, 1,
+#                 function(row) {
+#                           getContour(form, row)
+#                           #                 lapply(forms,
+#                           #                        function(form) {
+#                           #                                 which(sapply(form, is.character)) -> res
+#                           #                                 for(i in res) {
+#                           #                                  form[[i]] <- getContour(form[[i]], row)         
+#                           #                                 }
+#                           #                                  if (is.character(form)) as.numeric(form) else  eval(form)
+#                           #                        }) -> evaled
+#                           #                 
+#                           #                 browser()
+#                 }) 
+#           
+# }
+# getContour <- function(str, row) { sum(row[names(row) %~% str]) }
+# 
+# 
+# 
+# # load(file = 'windowCombinations.rData')
+# 
+# interpretWindow <- function(.SD, filter = NULL, sort = NULL, verbose = TRUE) {
+#           progs <- .SD$Combs[[1]]
+#           analyses <- .SD$Summaries[[1]]
+#           wn <- unique(.SD$windows)
+#           if (wn %len>% 1) stop("Can't interpret multiple windows", call. = FALSE)
+#           if ( length(analyses) > 1) {
+#           if (progs %len>% 1L && !is.null(filter)) {
+#                     filters <- unwrapFormula(filter)
+#                     sapply(filters, eval, envir = analyses) %>% apply(1, all) -> evaledfilters
+#                     if (!any(evaledfilters)) return(NULL)
+#                     progs <- progs[evaledfilters]
+#                     analyses <- analyses[evaledfilters, ]
+# 
+# 
+#           }
+#           if (progs %len>% 1L && !is.null(sort)) {
+#                     sorts <- unwrapFormula(sort)    
+#                     sorts <- lapply(sorts, function(s) call('order', s))
+#                     
+#                     lapply(rev(sorts), 
+#                            function(fil) {
+#                                      ord <- eval(fil, envir = analyses)
+#                                      analyses <<- analyses[ord, ]
+#                                      progs <<- progs[ord]
+#                            })
+#                     
+#                     
+#           }
+# }
+#           
+#           if (verbose) {
+#                     cat('\n')
+#                     cat(' Window ', wn, ':\n', sep = '') 
+#                     for(i in 1:length(progs)) {
+#                               cat('------------------------------------\n')
+#                               cat('\t')
+#                               cat(progs[[i]]$ChordName, '\n')
+#                               currow <- analyses[i, 1:6]
+#                               currow$NCTs <- attr(currow$NCTs, 'fracs')
+#                               cat('\t\t' %str+% colnames(currow) %str+% ' ' %str+% unlist(currow) %str+% '\n')
+#                               cat('\n')
+#                     }
+#                     invisible(analyses)
+#           } else { 
+#                     prog <- progs[[1]]
+#                    output <- rep(prog$ChordName, prog$Nslices)
+#                    if (length(output) == 0) output <- rep(NA, sum(Data$windows == wn))
+#                     # if (length(Data$windows[Data$windows == wn]) != length(output)) browser()
+#                    output
+#           }
+#                     
+#           
+#                     
+# }
+# interpretWindows <- function(wns = TRUE, filter = NULL, sort = NULL, wcombs = windowCombs) {
+#           
+#           wcombs[wns, interpretWindow(.SD, filter = filter, 
+#                                       sort = sort, verbose = FALSE), by = windows] -> output
+#           
+#           # data.frame(Chord = output, stringsAsFactors = FALSE)
+#           output
+#           
+# }
+# 
+# 
+# ######SORTING
+# 
+# #1 Only accept excape tone/cambiata (leapt from) if no other option
+# #2 Only accept appagiatura (leapt to) if no other option
+# #3 Take Delay == 0, unless there is no other option
+# #4 Take only lowest rank, unless other option
+# #5 take fewest chords
+# 
+# take1 <- ~ Contour('Esc|App|Ret|Inc|syn|[+]') > 0 ~ Rank ~  NChords
+# 
+# chords1 <- interpretWindows(TRUE, sort = take1)
+# 
+# for (i in seq_along(outs)) {
+#  # print(i)        
+# # writechords(i)
+#   writeLines(trans(fs[[outs[i]]]), fns[i])
+# # sapply(unique(Data$FileName), writechords)
+# }
 
 
 ####################################################################################################################################

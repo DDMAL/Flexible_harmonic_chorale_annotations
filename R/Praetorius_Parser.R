@@ -1,12 +1,13 @@
-setwd("~/Bridge/Research/Projects/Pitch/Harmony/Chorales")
+setwd("C:/Users/juyao/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/juyaolong/Flexible_harmonic_chorale_annotations/")
+#setwd("inst/extdata")
 library(stringi)
-source('Scripts/Praetorius_Functions.R')
+source('R/Praetorius_Functions.R')
 library(composeR)
 library(data.table)
 
-if (FALSE) {
+#if (FALSE) {
           
-tsvs <- read.tsvs(path = 'Data', '\\.dat$', quote = "")
+tsvs <- read.tsvs(path = 'data', '\\.dat$', quote = "")
 Map(tsvs, names(tsvs), seq_along(tsvs),
     f = function(., .name, .ind) {
           parts <- unique(grep('I".*', value = TRUE, .[grep('I"', .[,1]),]))
@@ -290,8 +291,8 @@ Data[ , pNCTs := list(classrow(.SD)), by = FileN]
 
 Data[ , NoteIndices := tapply(seq_len(length(unlist(Data$PCs))), rep(1:nrow(Data), lengths(Data$PCs)), list)]
 
-save(Data, file = 'ChoraleData.rData', compress = TRUE)
-}
+save(Data, file = 'data/ChoraleData.rData', compress = TRUE)
+#}
 
 ####
 
@@ -313,7 +314,7 @@ save(Data, file = 'ChoraleData.rData', compress = TRUE)
 
 
 
-load(file = 'ChoraleData.rData')
+load(file = 'data/ChoraleData.rData')
 
 Data[ , Voice := lapply(PCs, seq_along)]
 
@@ -382,10 +383,10 @@ trans <- function(chords) {
 writechords <- function(filename, chords) {
           
           
-          basename <- filename %str-% '^Data/' %str-% '\\.dat$'
+          basename <- filename %str-% '^data/' %str-% '\\.dat$'
           
           krnfile <- if (grepl('chor', filename)) 
-                    '~/Bridge/Research/Data/Humdrum/Kern/JSBach/371chorales/' %str+% basename %str+% '.krn'
+                    'inst/extdata/' %str+% basename %str+% '.krn'
           else
                     '~/Bridge/Research/Data/Praetorius/Krn/' %str+% basename %str+% '.krn'
           
@@ -461,7 +462,7 @@ writechords <- function(filename, chords) {
                     
           }
           
-          writeLines(outfile, con = 'Data/Chords/' %str+% basename %str+% '.krn')
+          writeLines(outfile, con = 'inst/' %str+% basename %str+% '.krn')
           
           
           

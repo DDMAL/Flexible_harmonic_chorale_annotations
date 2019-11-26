@@ -2,9 +2,9 @@ echo "**recip	^=.*|^\[*[0-9][0-9]*\.*" > rend.txt
 echo "**kern	^=.*|[A-Ga-g]{1,3}[-#]*[\]_]*|r" >> rend.txt
 echo "**pc	^=.*|^[A-G][#b]*|r" > rend2.txt
 
-for dir in 'Humdrum/Kern/JSBach/371chorales/' 'Praetorius/Krn/'
+for dir in 'inst/extdata/'
 do
-	for i in ~/Bridge/Research/Data/$dir*.krn
+	for i in $dir*.krn
 	do
 		echo $i
 		sed 's/[)(]*//g' $i | sed 's/ry/r/g' | sed 's/X//g'  | ridx -d > cur.krn
@@ -26,7 +26,7 @@ do
 
 
 			paste krn.tmp krnn.tmp met.tmp | ridx -G > x.tmp
-			paste x.tmp ferm.tmp > $PRO/Pitch/Harmony/Chorales/Data/$(basename $i .krn).dat
+			paste x.tmp ferm.tmp > data/$(basename $i .krn).dat
 
 			rm *.tmp
 	done
