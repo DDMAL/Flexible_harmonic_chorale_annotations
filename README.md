@@ -7,13 +7,20 @@ The 371 Bach chorales originated from <a href="http://kern.ccarh.orh">Kern Score
 The 200 Pr&aelig;torius chorales were newly created for this project, and are not available anywhere else.
 
 
-# FlexibleChoraleHarmonicAnalysis Rpackage
+# FlexibleChoraleHarmonicAnalysis R package usage
 
 The R package `FlexibleChoraleHarmonicAnalysis` contains the permutational analysis data for the 571 chorales, as well as several functions for filtering analyses.
-The package requires `R > 3.2` as well as the <a href="https://cran.r-project.org/web/packages/data.table/index.html">data.table</a> and <a href="https://cran.r-project.org/web/packages/stringr">stringr</a> packages.
-To install, simply download the `tar.gz` file, open R, change the working directory to the directory where you downloaded the tar ball, and run the command `install.packages("FlexibleChoraleHarmonicAnalysis_0.1.0.tar.gz, repos = NULL)`.
-The package can then be loaded using the command `library(FlexibleChoraleHarmonicAnalsis)`.
 
+To run this package locally, please refer to the following steps:
+
+1. Download and install R at: https://www.r-project.org/
+2. Download and install the "Rstudio Desktop Open Source Edition" at: https://rstudio.com/products/rstudio/
+3. Clone the whole project to your local drive using: git clone https://github.com/DDMAL/Flexible_harmonic_chorale_annotations.git
+4. Open Rstudio, and a few extra packages need to be downloaded and installed. Please type `options(timeout=10000)` in the terminal, since Rstudio only allows for 60 seconds to download the package, and we can specify the time as 10,000 seconds to give more time for download. 
+5. Run `install.packages("data.table")`, `install.packages("stringr")`, `install.packages("rlang")`, `install.packages("readr")`, `install.packages("rstudioapi")`, `install.packages("plyr")`, `install.packages("purrr")`, and `install.packages("lazyeval")` in order.
+6. After, install the `composeR_0.0.0.9000.tar.gz` package from the cloned repo. You can do so by clicking `Tools`-`Install Packages` in the GUI. Then install the `FlexibleChoraleHarmonicAnalysis_0.1.1.tar.gz` package from the cloned repo in the same manner.
+7. Finally, load this rule-based algorithm package by running `library(FlexibleChoraleHarmonicAnalysis)`.
+8. Open the R script called `ChoraleAnalysis.R` under the `R` folder, select all the code and click `Run`, the resulting chord label annotations and the music will be automatically generated for the 571 chorales, saved in the home directory of your OS.
 
 # GUI
 
