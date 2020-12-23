@@ -3,7 +3,7 @@
 This page is a companion to the <a href="http://ismir2018.ircam.fr/doc/pdfs/283_Paper.pdf">paper</a> presented at the <a href="https://www.ismir.net">International Society for Music Information Retrieval</a> <a href="https://ismir2018.ircam.fr">2018 conference</a> in Paris France.
 
 The kernData folder contains raw humdrum-format (\*\*kern) files of the 571 chorales used in the project: 371 by J.S. Bach and 200 by Michael Pr&aelig;torius.
-The 371 Bach chorales originated from <a href="http://kern.ccarh.orh">Kern Scores</a>, but some corrections have been made (annotated in reference records) and one chorale (the five-part chorale) was has been added to the set.
+The 371 Bach chorales originated from <a href="http://kern.ccarh.orh">Kern Scores</a>, but some corrections have been made (annotated in reference records, i.e., 184, 194, 246, 329) and one chorale (the five-part chorale, 150) was has been added to the set.
 The 200 Pr&aelig;torius chorales were newly created for this project, and are not available anywhere else.
 
 
