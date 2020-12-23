@@ -10,12 +10,23 @@ The 200 Pr&aelig;torius chorales were newly created for this project, and are no
 # FlexibleChoraleHarmonicAnalysis Rpackage
 
 The R package `FlexibleChoraleHarmonicAnalysis` contains the permutational analysis data for the 571 chorales, as well as several functions for filtering analyses.
-The package requires `R > 3.2` as well as the <a href="https://cran.r-project.org/web/packages/data.table/index.html">data.table</a> and <a href="https://cran.r-project.org/web/packages/stringr">stringr</a> packages.
-To install, simply download the `tar.gz` file, open R, change the working directory to the directory where you downloaded the tar ball, and run the command `install.packages("FlexibleChoraleHarmonicAnalysis_0.1.0.tar.gz, repos = NULL)`.
+To install it, simply download the `tar.gz` file, open R, change the working directory to the directory where you downloaded the tar ball, 
+and run the command `install.packages("FlexibleChoraleHarmonicAnalysis_0.8.0_R_x86_64-pc-linux-gnu.tar.gz" , repos = NULL)`.
+You may need to install the following dependencies first, if you don't have them already:
+The package requires `R > 3.2` as well as the <a href="https://cran.r-project.org/web/packages/data.table/index.html">data.table</a>,
+ <a href="https://cran.r-project.org/web/packages/stringr">stringr</a>,
+and <a href="https://cran.r-project.org/web/packages/rlang/index.html">rlang</a> packages.
 The package can then be loaded using the command `library(FlexibleChoraleHarmonicAnalsis)`.
+
+
+## Documentation
+
+You can read access documentation as pdf right here in the file `FlexibleChoraleHarmonicAnalysis_0.8.0.pdf`.
+Alternatively, once you've installed and loaded the package, you can call `?FlexibleChoraleHarmonicAnalysis` to get started reading the documentation for the package, from within R.
+
 
 
 # GUI
 
-The R package API can be used through a GUI <a href="https://natsguitar.github.io/FlexibleChoraleHarmonicAnalysisGUI/">here</a>.
 
+Sorry! The GUI is now defunct.
