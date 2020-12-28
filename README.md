@@ -20,9 +20,9 @@ To run this package locally, please refer to the following steps:
 5. Run `install.packages("data.table")`, `install.packages("stringr")`, `install.packages("rlang")`, `install.packages("readr")`, `install.packages("rstudioapi")`, `install.packages("plyr")`, `install.packages("purrr")`, and `install.packages("lazyeval")` in order.
 6. After, install the `composeR_0.0.0.9000.tar.gz` package from the cloned repo. You can do so by clicking `Tools`-`Install Packages` in the GUI. Then install the `FlexibleChoraleHarmonicAnalysis_0.1.1.tar.gz` package from the cloned repo in the same manner.
 7. Finally, load this rule-based algorithm package by running `library(FlexibleChoraleHarmonicAnalysis)`.
-8. Open the R script called `ChoraleAnalysis.R` under the `R` folder, select all the code and click `Run`, the resulting chord label annotations and the music will be automatically generated for the 571 chorales, saved in the home directory of your OS.
 
-# GUI
+# Generating "maximally harmonic" chord labels 
 
-The R package API can be used through a GUI <a href="https://natsguitar.github.io/FlexibleChoraleHarmonicAnalysisGUI/">here</a>.
+This rule-based algorithm was used in the paper "An Interactive Workflow for Generating Chord Labels for Homorhythmic Music in Symbolic Formats" to generate "maximally harmonic" chord labels, which uses a combination of five ordered filters. The code of these filters can be found in Line 171 of the R script called `ChoraleAnalysis.R` under the `R` folder. To replicate these chord labels, select all the code and click `Run`, the resulting chord label annotations and the music will be automatically generated for the 571 chorales, saved in the home directory of your OS.
+
 
