@@ -15,7 +15,7 @@ To run this package locally, please refer to the following steps:
 
 1. Download and install R at: https://www.r-project.org/
 2. Download and install the "Rstudio Desktop Open Source Edition" at: https://rstudio.com/products/rstudio/
-3. Clone the whole project to your local drive using: git clone https://github.com/DDMAL/Flexible_harmonic_chorale_annotations.git
+3. Clone the whole project to your local drive using: git clone https://github.com/DDMAL/Flexible_harmonic_chorale_annotations.git and switch into `dev` branch (this branch) using `git checkout dev` command.
 4. Open Rstudio, and a few extra packages need to be downloaded and installed. Please type `options(timeout=10000)` in the terminal, since Rstudio only allows for 60 seconds to download the package, and we can specify the time as 10,000 seconds to give more time for download. 
 5. Run `install.packages("data.table")`, `install.packages("stringr")`, `install.packages("rlang")`, `install.packages("readr")`, `install.packages("rstudioapi")`, `install.packages("plyr")`, `install.packages("purrr")`, and `install.packages("lazyeval")` in order.
 6. After, install the `composeR_0.0.0.9000.tar.gz` package from the cloned repo. You can do so by clicking `Tools`-`Install Packages` in the GUI. Then install the `FlexibleChoraleHarmonicAnalysis_0.1.1.tar.gz` package from the cloned repo in the same manner.
